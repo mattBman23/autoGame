@@ -8,5 +8,8 @@ public class Identifiers {
     final static String AttackBtn = System.getProperty("user.dir") + "\\dCode\\resources\\images\\attackBtn.PNG";
     final static String WarButton = System.getProperty("user.dir") + "\\dCode\\resources\\images\\warButton.PNG";
     final static String OkayBtn = System.getProperty("user.dir") + "\\dCode\\resources\\images\\okayButton.PNG";
+
     public static Region leftScreen = new Screen(0).newRegion(90, 177, 1040, 584);
+    public static int FormHeight = 400;
+    public static int FormWidth = 300;
 }
