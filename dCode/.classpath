@@ -4,4 +4,5 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="output" path="bin"/>
 	<classpathentry kind="lib" path="resources/jars/sikulixapi-2.0.0.jar" />
+	<classpathentry kind="lib" path="resources/jars/material-ui-swing-1.1.1.jar" />
 </classpath>
