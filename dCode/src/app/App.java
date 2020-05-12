@@ -8,6 +8,9 @@ import mdlaf.utils.MaterialColors;
 import java.awt.event.ActionEvent;
 import mdlaf.themes.JMarsDarkTheme;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
 import mdlaf.themes.MaterialOceanicTheme;
 import mdlaf.animation.MaterialUIMovement;
 
@@ -17,9 +20,68 @@ import org.sikuli.script.Screen;
 
 public class App extends Identifiers {
     public static void main(String[] args) throws Exception {
+        // leftScreen.highlight();
         // RunPOM();
         // ShowForm();
-        testUI();
+        // testUI();
+    }
+
+    public static boolean POMRunning() {
+        boolean isRunning = false;
+        try {
+
+            String line, pidInfo = "";
+
+            Process p = Runtime.getRuntime().exec(System.getenv("windir") + "\\system32\\" + "tasklist.exe");
+
+            BufferedReader input = new BufferedReader(new InputStreamReader(p.getInputStream()));
+
+            while ((line = input.readLine()) != null) {
+                pidInfo += line;
+            }
+
+            input.close();
+
+            if (pidInfo.contains("Nox.exe")) {
+                isRunning = true;
+            }
+        } catch (Exception e) {
+            System.out.println("Unable to find nox");
+        }
+        return isRunning;
+    }
+
+    public static void RunPOM() {
+        int amtRan = 0;
+        try {
+            leftScreen.find(BtnOpenUI).click();
+            while (true) {
+                leftScreen.wait(UiLogo, FOREVER);
+                leftScreen.wait(UiLogo, FOREVER);
+                leftScreen.find(AttackBtn).click();
+                leftScreen.wait(WarButton, FOREVER);
+                Thread.sleep(1000);
+                leftScreen.offset(-245, 245).click();
+                leftScreen.offset(-85, 245).click();
+                leftScreen.offset(0, 245).click();
+                leftScreen.offset(85, 245).click();
+                leftScreen.offset(170, 245).click();
+                leftScreen.getCenter().click();
+
+                leftScreen.wait(OkayBtn, FOREVER);
+                Thread.sleep(1500);
+
+                leftScreen.getCenter().click();
+                Thread.sleep(3000);
+                leftScreen.find(OkayBtn).click();
+                amtRan = amtRan + 1;
+                System.out.println("Completed attack: " + amtRan);
+                Thread.sleep(1000);
+
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 
     public static void testUI() {
@@ -240,36 +302,6 @@ public class App extends Identifiers {
             dForm.setLocationRelativeTo(null);
             dForm.setVisible(true);
             dForm.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
-    }
-
-    public static void RunPOM() {
-        int amtRan = 0;
-        try {
-            leftScreen.find(BtnOpenUI).click();
-            while (true) {
-                leftScreen.wait(UiLogo, FOREVER);
-                leftScreen.wait(UiLogo, FOREVER);
-                leftScreen.find(AttackBtn).click();
-                leftScreen.wait(WarButton, FOREVER);
-                Thread.sleep(1000);
-                leftScreen.offset(-245, 245).click();
-                leftScreen.offset(-85, 245).click();
-                leftScreen.offset(0, 245).click();
-                leftScreen.offset(85, 245).click();
-                leftScreen.offset(170, 245).click();
-                leftScreen.getCenter().click();
-                leftScreen.wait(OkayBtn, FOREVER);
-                Thread.sleep(1500);
-                leftScreen.getCenter().click();
-                Thread.sleep(1500);
-                leftScreen.find(OkayBtn).click();
-                amtRan = amtRan + 1;
-                System.out.println("Completed attack: " + amtRan);
-                Thread.sleep(1000);
-            }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
